@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using TestScenarioFramework.Attributes;
 
-namespace MvcMovie.Models
+
+namespace LocalDebug.Entites
 {
     [TestScenarioEntity]
     public class Movie
@@ -24,5 +27,8 @@ namespace MvcMovie.Models
         public string Genre { get; set; }
         public decimal Price { get; set; }
         public virtual List<Actor> Actors { get; set; }
+        public virtual Actor Lead { get; set; }
+
+        public override string ToString() => Utils.DebugUtils.EntityToString(this);
     }
 }

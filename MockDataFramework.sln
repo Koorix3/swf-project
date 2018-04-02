@@ -5,9 +5,13 @@ VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MvcMovie", "MvcMovie\MvcMovie.csproj", "{4B4D0AD7-49E6-42BC-BDBE-86F921C30220}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcMovie.UnitTests", "MvcMovie.UnitTests\MvcMovie.UnitTests.csproj", "{92C8FD9E-BCE4-4EA0-B47E-E2E5CFC36D6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MvcMovie.UnitTests", "MvcMovie.UnitTests\MvcMovie.UnitTests.csproj", "{92C8FD9E-BCE4-4EA0-B47E-E2E5CFC36D6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcMovie.IntegrationTests", "MvcMovie.IntegrationTests\MvcMovie.IntegrationTests.csproj", "{8F489573-0342-4AC4-B08F-AC86BD3E95D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MvcMovie.IntegrationTests", "MvcMovie.IntegrationTests\MvcMovie.IntegrationTests.csproj", "{8F489573-0342-4AC4-B08F-AC86BD3E95D3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestScenarioFramework", "TestScenarioFramework\TestScenarioFramework.csproj", "{D4252111-BF52-4F67-B59A-76A3CA23A2FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalDebug", "LocalDebug\LocalDebug.csproj", "{66181CEE-517A-465C-A944-8DBB796DA90C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +31,14 @@ Global
 		{8F489573-0342-4AC4-B08F-AC86BD3E95D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F489573-0342-4AC4-B08F-AC86BD3E95D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F489573-0342-4AC4-B08F-AC86BD3E95D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4252111-BF52-4F67-B59A-76A3CA23A2FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4252111-BF52-4F67-B59A-76A3CA23A2FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4252111-BF52-4F67-B59A-76A3CA23A2FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4252111-BF52-4F67-B59A-76A3CA23A2FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66181CEE-517A-465C-A944-8DBB796DA90C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66181CEE-517A-465C-A944-8DBB796DA90C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66181CEE-517A-465C-A944-8DBB796DA90C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66181CEE-517A-465C-A944-8DBB796DA90C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
