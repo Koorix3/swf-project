@@ -10,16 +10,14 @@ namespace LocalDebug
             var ts = new TestScenario("hello_world");
             var someMovie = ts.GetEntity<Entites.Movie>();
 
-            /*
-            var rnd = new RandomDataGenerator();
+            //var rdg = new RandomDataGenerator();
 
-            for (int i = 0; i < 20; i++)
-            {
-                Console.WriteLine(rnd.GetDateTime(new DateTime(2018, 3, 1), DateTime.Today));
-            }
-            */
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    Console.WriteLine(rdg.GetDecimal(50, 60));
+            //}
 
-            Console.WriteLine(someMovie);
+            Console.WriteLine(Utils.DebugUtils.EntityToString(someMovie));
         }
     }
 }

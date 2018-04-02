@@ -26,14 +26,34 @@ namespace TestScenarioFramework
             return sb.ToString();
         }
 
-        public int GetInteger(int maxValue)
+        public decimal GetDecimal(decimal max)
         {
-            return _rnd.Next(maxValue);
+            return GetDecimal(0m, max);
         }
 
-        public int GetInteger(int minValue, int maxValue)
+        public decimal GetDecimal(decimal min, decimal max)
         {
-            return _rnd.Next(minValue, maxValue);
+            return Math.Round(min + (decimal)(_rnd.NextDouble() * (double)(max - min)), 2);
+        }
+
+        public double GetDouble(double max)
+        {
+            return GetDouble(0d, max);
+        }
+
+        public double GetDouble(double min, double max)
+        {
+            return min + (_rnd.NextDouble() * (max - min));
+        }
+
+        public int GetInteger(int max)
+        {
+            return _rnd.Next(max);
+        }
+
+        public int GetInteger(int min, int max)
+        {
+            return _rnd.Next(min, max);
         }
 
         public DateTime GetDateTime(DateTime max)

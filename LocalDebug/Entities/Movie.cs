@@ -19,16 +19,19 @@ namespace LocalDebug.Entites
         [TestScenarioMember]
         public string Title { get; set; }
 
-        [TestScenarioMember]
+        [TestScenarioMember(Min = "1970-01-01", Max = "2018-04-01")]
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public DateTime ReleaseDate { get; set; }
 
         [TestScenarioMember]
         public string Genre { get; set; }
+
+        [TestScenarioMember(Min = 50, Max = 60)]
         public decimal Price { get; set; }
+
+        [TestScenarioMember(Multiplicity = 5)]
         public virtual List<Actor> Actors { get; set; }
         public virtual Actor Lead { get; set; }
-
-        public override string ToString() => Utils.DebugUtils.EntityToString(this);
+        
     }
 }

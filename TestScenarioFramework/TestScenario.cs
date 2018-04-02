@@ -4,12 +4,14 @@ using System.Linq;
 using TestScenarioFramework.Attributes;
 using System.Text;
 using System.Collections;
+using System.Globalization;
 
 namespace TestScenarioFramework
 {
     public class TestScenario
     {
         private const int MaxLevelOfRecursion = 10;
+        private const int DefaultListMultiplicity = 10;
 
         private string _name;
         private RandomDataGenerator _rdg;
@@ -55,6 +57,8 @@ namespace TestScenarioFramework
 
             foreach (var pi in t.GetProperties())
             {
+                var att = pi.GetCustomAttribute<TestScenarioMemberAttribute>();
+
                 //Console.WriteLine(pi.PropertyType);
                 switch (pi.PropertyType.ToString())
                 {
@@ -65,17 +69,57 @@ namespace TestScenarioFramework
                         break;
 
                     case "System.Decimal":
-                        pi.SetValue(instance, _rdg.GetInteger(10000) / 100m);
-                        break;
+                        { 
+                            decimal min = att != null ? Convert.ToDecimal(att.Min) : 0m;
+                            decimal max = att != null ? Convert.ToDecimal(att.Max) : 0m;
+                        
+                            pi.SetValue(
+                                instance, 
+                                max != 0m ? _rdg.GetDecimal(min, max) : _rdg.GetDecimal(max));
 
+                            break;
+                        }
                     case "System.Single":
                     case "System.Double":
-                        pi.SetValue(instance, _rdg.GetInteger(10000) / 100f);
-                        break;
+                        { 
+                            double min = att != null ? Convert.ToDouble(att.Min) : 0d;
+                            double max = att != null ? Convert.ToDouble(att.Max) : 0d;
+
+                            pi.SetValue(
+                                instance,
+                                max != 0d ? _rdg.GetDouble(min, max) : _rdg.GetDouble(max));
                         
+                            break;
+                        }
                     case "System.DateTime":
-                        pi.SetValue(instance, _rdg.GetDateTime(DateTime.Now.AddMonths(-1), DateTime.Now));
-                        break;
+                        {
+                            DateTime min = DateTime.MinValue;
+                            DateTime max = DateTime.MinValue;
+
+                            if (att != null)
+                            {
+                                DateTime.TryParseExact(
+                                    Convert.ToString(att.Min), 
+                                    "yyyy-MM-dd", 
+                                    CultureInfo.InvariantCulture, 
+                                    DateTimeStyles.None, 
+                                    out min);
+
+                                DateTime.TryParseExact(
+                                    Convert.ToString(att.Max),
+                                    "yyyy-MM-dd",
+                                    CultureInfo.InvariantCulture,
+                                    DateTimeStyles.None,
+                                    out max);
+                            }
+
+                            if (min == DateTime.MinValue) min = DateTime.Now.AddMonths(-1);
+                            if (max == DateTime.MinValue) max = DateTime.Now;
+
+                            pi.SetValue(instance, _rdg.GetDateTime(min, max));
+                            break;
+
+                        }
 
                     case "System.String":
                         pi.SetValue(instance, _rdg.GetString(10));
@@ -91,9 +135,10 @@ namespace TestScenarioFramework
                             // Create new enumerable
                             var list = (IList)Activator.CreateInstance(pi.PropertyType);
                             Type innerType = pi.PropertyType.GetGenericArguments()[0];
-                            
-                            // Create some liste elements
-                            for (int i = 0; i < 10; i++)
+                            int numElements = att != null ? att.Multiplicity : DefaultListMultiplicity;
+
+                            // Create some list elements
+                            for (int i = 0; i < numElements; i++)
                             {
                                 list.Add(GetEntity(innerType, levelOfRecursion + 1));
                             }
