@@ -86,7 +86,7 @@ namespace TestScenarioFramework
 
             if (t.GetCustomAttributes<TestScenarioEntity>().Count() == 0)
                 throw new TestScenarioException(
-                    $"Type \"{t.ToString()}\" doesn't contain an \"TestScenarioEntity\" attribute.");
+                    $"Type \"{t.ToString()}\" doesn't contain a \"TestScenarioEntity\" attribute.");
 
             if (levelOfRecursion >= MaxLevelOfRecursion)
                 throw new TestScenarioException("Max. number of recusions exceeded.");
