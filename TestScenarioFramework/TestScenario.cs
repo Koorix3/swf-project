@@ -5,6 +5,10 @@ using TestScenarioFramework.Attributes;
 using System.Text;
 using System.Collections;
 using System.Globalization;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+using System.IO;
+using Newtonsoft.Json.Linq;
 
 namespace TestScenarioFramework
 {
@@ -15,6 +19,11 @@ namespace TestScenarioFramework
 
         private string _name;
         private RandomDataGenerator _rdg;
+        private List<object> _createdEntities;
+        private string _filePath;
+        private Boolean _createMode;
+        private int _entityIndex;
+        private JArray _loadedEntites;
 
         public TestScenario(string name)
         {
@@ -23,6 +32,25 @@ namespace TestScenarioFramework
 
             _name = name;
             _rdg = new RandomDataGenerator();
+            _filePath = string.Concat(
+                Directory.GetCurrentDirectory(),
+                Path.DirectorySeparatorChar,
+                "test-scenario-data", 
+                Path.DirectorySeparatorChar, 
+                _name, 
+                ".json");
+
+            _createMode = !File.Exists(_filePath);
+            
+            // Deserialization in Newtonsoft.Json needs to know all types beforehand.
+            // Workaraund: Read entities as JObject-Array and convert late (when the type is known).
+            if (!_createMode) _loadedEntites = LoadEntities(_filePath);
+        }
+
+        private JArray LoadEntities(string filePath)
+        {
+            string jsonText = File.ReadAllText(filePath);
+            return (JArray)JsonConvert.DeserializeObject(jsonText);
         }
 
         public T GetEntity<T>()
@@ -34,9 +62,28 @@ namespace TestScenarioFramework
         {
             return GetEntity(t, 0);
         }
+
+        public void Save()
+        {
+            if (!_createMode) return;
+
+            string dirPath = Path.GetDirectoryName(_filePath);
+
+            if (!Directory.Exists(dirPath))
+                Directory.CreateDirectory(dirPath);
+
+            string jsonText = JsonConvert.SerializeObject(_createdEntities, Formatting.Indented);
+
+            using (StreamWriter sw = File.CreateText(_filePath))
+            {
+                sw.Write(jsonText);
+            }
+        }
         
         private object GetEntity(Type t, int levelOfRecursion)
         {
+            if (!_createMode) return _loadedEntites[_entityIndex++].ToObject(t);
+
             if (t.GetCustomAttributes<TestScenarioEntity>().Count() == 0)
                 throw new TestScenarioException(
                     $"Type \"{t.ToString()}\" doesn't contain an \"TestScenarioEntity\" attribute.");
@@ -47,6 +94,12 @@ namespace TestScenarioFramework
             var entity = Activator.CreateInstance(t);
 
             PopulateEntityProperties(entity, levelOfRecursion);
+
+            if (levelOfRecursion == 0)
+            {
+                if (_createdEntities == null) _createdEntities = new List<object>();
+                _createdEntities.Add(entity);
+            }
 
             return entity;
         }
@@ -153,34 +206,5 @@ namespace TestScenarioFramework
 
             }
         }
-
-        /*
-        private Assembly _assembly;
-        private string _name;
-
-        public TestScenario(Assembly assembly, string name)
-        {
-            if (assembly == null)
-                throw new ArgumentException("assembly");
-
-            if (string.IsNullOrEmpty(name))
-                throw new ArgumentException("name");
-
-            _name = name;
-            _assembly = assembly;
-
-            Initialize();
-        }
-
-        private void Initialize()
-        {
-            var scenarioTypes = 
-                from t in _assembly.GetTypes()
-                where t.GetCustomAttributes(typeof(TestScenarioEntity)).Count() > 0
-                select t;
-
-
-
-        }*/
     }
 }

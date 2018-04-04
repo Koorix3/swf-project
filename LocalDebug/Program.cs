@@ -18,6 +18,7 @@ namespace LocalDebug
             //}
 
             Console.WriteLine(Utils.DebugUtils.EntityToString(someMovie));
+            ts.Save();
         }
     }
 }
