@@ -14,6 +14,9 @@ namespace LocalDebug.Entites
         public string LastName { get; set; }
 
         public int MovieId { get; set; }
+
+        // Avoid cyclic references for mock data generation!
+        [TestScenarioMember(Exclude = true)]
         public Movie Movie { get; set; }
     }
 }

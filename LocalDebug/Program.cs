@@ -1,5 +1,6 @@
 ﻿using System;
 using TestScenarioFramework;
+using TestScenarioFramework.Export;
 
 namespace LocalDebug
 {
@@ -7,7 +8,10 @@ namespace LocalDebug
     {
         static void Main(string[] args)
         {
-            var ts = new TestScenario("hello_world");
+            // IOC types
+            JsonExporter exporter = new JsonExporter();
+
+            var ts = new TestScenario("hello_world2", exporter);
             var someMovie = ts.GetEntity<Entites.Movie>();
 
             //var rdg = new RandomDataGenerator();
@@ -17,8 +21,8 @@ namespace LocalDebug
             //    Console.WriteLine(rdg.GetDecimal(50, 60));
             //}
 
-            Console.WriteLine(Utils.DebugUtils.EntityToString(someMovie));
-            ts.Save();
+            Console.WriteLine(Utils.DebugUtility.EntityToString(someMovie));
+            //ts.Save();
         }
     }
 }

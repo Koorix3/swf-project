@@ -10,5 +10,6 @@ namespace TestScenarioFramework.Attributes
         public int Multiplicity;
         public object Min;
         public object Max;
+        public bool Exclude;
     }
 }

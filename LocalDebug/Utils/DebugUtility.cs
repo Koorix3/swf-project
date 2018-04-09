@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LocalDebug.Utils
 {
-    internal class DebugUtils
+    internal class DebugUtility
     {
         public static string EntityToString(object o, int numTabs = 0)
         {
@@ -30,9 +30,14 @@ namespace LocalDebug.Utils
                     {
                         foreach (var e in list)
                         {
-                            sb.AppendLine(Utils.DebugUtils.EntityToString(e, numTabs + 1));
+                            sb.AppendLine(Utils.DebugUtility.EntityToString(e, numTabs + 1));
                         }
                     }
+                }
+                else
+                {
+                    sb.AppendLine($"{tabs}\"{pi.Name}\": ");
+                    sb.AppendLine(Utils.DebugUtility.EntityToString(pi.GetValue(o), numTabs + 1));
                 }
             }
 
