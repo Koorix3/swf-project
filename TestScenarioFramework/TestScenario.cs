@@ -26,15 +26,20 @@ namespace TestScenarioFramework
             _rdg = new RandomDataGenerator();
 
             _exporter = exporter;
-            _exporter.Setup(string.Concat(
-                Directory.GetCurrentDirectory(),
-                Path.DirectorySeparatorChar,
-                "test-scenario-data",
-                Path.DirectorySeparatorChar,
-                _name,
-                ".json"));
 
-            if (!_exporter.IsNew) _exporter.Load();
+            if (_exporter != null)
+            {
+                _exporter.Setup(string.Concat(
+                    Directory.GetCurrentDirectory(),
+                    Path.DirectorySeparatorChar,
+                    "test-scenario-data",
+                    Path.DirectorySeparatorChar,
+                    _name,
+                    ".json"));
+
+                if (!_exporter.IsNew) _exporter.Load();
+            }
+            
         }
         
         public T GetEntity<T>()
@@ -49,14 +54,14 @@ namespace TestScenarioFramework
 
         public void Save()
         {
-            if (!_exporter.IsNew) return;
+            if (_exporter != null && !_exporter.IsNew) return;
             _exporter.Save();
         }
         
         private object GetEntity(Type t, int levelOfRecursion)
         {
             // Return persisted entity in read mode ...
-            if (!_exporter.IsNew)
+            if (_exporter != null && !_exporter.IsNew)
                 return Utils.ReflectionUtility.InvokeGeneric(_exporter, t, "Pop", null);
 
             // ... or create new entity
@@ -75,7 +80,7 @@ namespace TestScenarioFramework
                 (Type et) => GetEntity(et, levelOfRecursion + 1));
 
             // Register entity with exporter
-            if (levelOfRecursion == 0)
+            if (_exporter != null && levelOfRecursion == 0)
                 Utils.ReflectionUtility.InvokeGeneric(_exporter, t, "Push", new object[] { entity });
 
             return entity;
