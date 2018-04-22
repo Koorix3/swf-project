@@ -1,6 +1,8 @@
 # Test Scenario Framework
 This framework can be used to create entities and populate their fields with randomly generated data. It was created as a project for the course “Software Frameworks” at the University of Applied Sciences Technikum Wien (www.technikum-wien.at).
 
+![Build Status](https://koorix3.visualstudio.com/_apis/public/build/definitions/11d0b104-f77d-4378-abe8-470aa0cb0125/4/badge)
+
 ## Features
 - Creation of test entities with minimal code overhead.
 - Entity classes can be created simply by using attributes.
