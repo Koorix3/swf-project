@@ -2,13 +2,14 @@
 using System.Reflection;
 using System.Linq;
 using TestScenarioFramework.Attributes;
-using System.Collections;
-using System.Globalization;
 using System.IO;
 using TestScenarioFramework.Export;
 
 namespace TestScenarioFramework
 {
+    /// <summary>
+    /// Manages test scenarios and mock data.
+    /// </summary>
     public class TestScenario
     {
         private const int MaxLevelOfRecursion = 10;
@@ -17,6 +18,11 @@ namespace TestScenarioFramework
         private RandomDataGenerator _rdg;
         private IExporter _exporter;
 
+        /// <summary>
+        /// Initializes a new TestScenario instance with a specified name and exporter.
+        /// </summary>
+        /// <param name="name">The name of the scenario and, when used, the persisted file</param>
+        /// <param name="exporter">The exporter used when persisting scenarios</param>
         public TestScenario(string name, IExporter exporter)
         {
             if (string.IsNullOrEmpty(name))
@@ -42,22 +48,41 @@ namespace TestScenarioFramework
             
         }
         
+        /// <summary>
+        /// Creates/loads entity of a certain type.
+        /// </summary>
+        /// <typeparam name="T">Entity type</typeparam>
+        /// <returns>A new instance of the specified type</returns>
         public T GetEntity<T>()
         {
             return (T)GetEntity(typeof(T));
         }
 
+        /// <summary>
+        /// Creates/loads entity of a certain type.
+        /// </summary>
+        /// <param name="t">Entity runtime type</param>
+        /// <returns>A new instance of the specified type</returns>
         public object GetEntity(Type t)
         {
             return GetEntity(t, 0);
         }
 
+        /// <summary>
+        /// Tries to persist the scenario, using the specified IExporter.
+        /// </summary>
         public void Save()
         {
             if (_exporter != null && !_exporter.IsNew) return;
             _exporter.Save();
         }
-        
+
+        /// <summary>
+        /// Recursive function to create new entites.
+        /// </summary>
+        /// <param name="t">Entity type</param>
+        /// <param name="levelOfRecursion">Current numer of recursions</param>
+        /// <returns>A new instance of the specified type</returns>
         private object GetEntity(Type t, int levelOfRecursion)
         {
             // Return persisted entity in read mode ...

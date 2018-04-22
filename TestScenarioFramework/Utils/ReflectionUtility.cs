@@ -2,7 +2,7 @@
 
 namespace TestScenarioFramework.Utils
 {
-    class ReflectionUtility
+    internal class ReflectionUtility
     {
         /// <summary>
         /// Invokes a generic method by using a type variable.

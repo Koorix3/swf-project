@@ -68,5 +68,10 @@ namespace TestScenarioFramework.UnitTests
             Assert.Equal("Back to the Future", someMovie.Title);
         }
 
+        public void CheckTestScenarioException1()
+        {
+
+        }
+
     }
 }

@@ -8,12 +8,18 @@ using TestScenarioFramework.Attributes;
 
 namespace TestScenarioFramework
 {
+    /// <summary>
+    /// Default class for generating random data.
+    /// </summary>
     public class RandomDataGenerator
     {
         private const int DefaultListMultiplicity = 10;
 
         private Random _rnd;
 
+        /// <summary>
+        /// Initializes a new RandomDataGenerator instance.
+        /// </summary>
         public RandomDataGenerator()
         {
             _rnd = new Random();
