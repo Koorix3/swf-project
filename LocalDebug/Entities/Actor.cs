@@ -12,7 +12,6 @@ namespace LocalDebug.Entites
         public int ActorId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-
         public int MovieId { get; set; }
 
         // Avoid cyclic references for mock data generation!

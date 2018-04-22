@@ -8,21 +8,17 @@ namespace LocalDebug
     {
         static void Main(string[] args)
         {
-            // IOC types
+            // Initialize exporter (For testing. Exporters should be constructed by DI-frameworks.)
             JsonExporter exporter = new JsonExporter();
 
-            var ts = new TestScenario("hello_world2", exporter);
-            var someMovie = ts.GetEntity<Entites.Movie>();
+            // Create a new TestScenario instance
+            var scenario = new TestScenario("hello_world2", exporter);
 
-            //var rdg = new RandomDataGenerator();
-
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    Console.WriteLine(rdg.GetDecimal(50, 60));
-            //}
-
+            // Create a random entity on-the-fly
+            var someMovie = scenario.GetEntity<Entites.Movie>();
+            
             Console.WriteLine(Utils.DebugUtility.EntityToString(someMovie));
-            //ts.Save();
+            //scenario.Save();
         }
     }
 }
