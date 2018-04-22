@@ -137,3 +137,17 @@ The solutions contains several projects:
 - *MvcMovie*: Sample .Net CORE MVC application
 - *MvcMovie.UnitTests*: Unit tests for the sample application
 - *LocalDebug*: Console application project for simple framework testing
+
+## Contribute
+
+You're welcome to contibute to our test scenario framework. If you are willing to help, please check current pull requests or issues on our GitHub page. When working on a pull request, please keep to the following guidelines:
+
+- Each pull request should implement *one* feature or fix a single bug. 
+- Please don't modify general files like .gitignore.
+- Please don't modify version numbers.
+- Try to keep additional dependencies at a minimum.
+- Keep in mind that pull requests take some time to review before they get merged into the master branch.
+
+## Reporting Issues
+
+Please use our GitHub page to report any issues you come across. If possible, try to list the steps necessary to reproduce the bug.
