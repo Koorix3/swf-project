@@ -18,6 +18,12 @@ The framework can be installed via the NuGet Package Manager.
 PM> Install-Package FHTW.SFW.TestScenarioFramework -Version 0.1.0
 ```
 
+Or with the dotnet cli utility
+
+```
+dotnet add package FHTW.SFW.TestScenarioFramework --version 0.1.0 
+```
+
 ## Getting Started
 Entity classes can be prepared for generation by using the *TestScenarioEntity* and *TestScenarioMember* attributes, as shown in the following listing.
 ```csharp
